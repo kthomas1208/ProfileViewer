@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ProfileViewer</string>
+    <string name="facebook_app_id">562484977276929</string>
+
 </resources>
