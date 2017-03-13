@@ -52,4 +52,21 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="17dp" />
 
+    <!--TODO: Only make this visible once logged in-->
+    <Button
+        android:id="@+id/profile_button"
+        android:layout_width="212dp"
+        android:layout_height="46dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="92dp"
+        android:background="@color/com_facebook_blue"
+        android:onClick="launchProfileActivity"
+        android:text="@string/let_s_go"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintRight_toLeftOf="@+id/guideline2"
+        android:layout_marginRight="8dp"
+        tools:layout_editor_absoluteY="404dp" />
+
 </android.support.constraint.ConstraintLayout>

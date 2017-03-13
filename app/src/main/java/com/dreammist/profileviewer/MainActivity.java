@@ -3,6 +3,8 @@ package com.dreammist.profileviewer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -16,14 +18,20 @@ import com.facebook.login.widget.LoginButton;
 public class MainActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
+    private Profile profile;
+
+    private TextView displayText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
+        displayText = (TextView) findViewById(R.id.textView);
+        profile = Profile.getCurrentProfile();
+        if(profile != null) displayText.setText("Hey there, " + profile.getFirstName() + "!");
 
+        final LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
         callbackManager = CallbackManager.Factory.create();
 
         loginButton.registerCallback(callbackManager,
@@ -33,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        //displayText = (TextView) findViewById(R.id.textView);
                         if(Profile.getCurrentProfile() == null) {
                             mProfileTracker = new ProfileTracker() {
                                 @Override
                                 protected void onCurrentProfileChanged(final Profile oldProfile, final Profile currentProfile) {
                                     // currentProfile is the new profile
                                     Toast.makeText(MainActivity.this, "Hey there, " + currentProfile.getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                                    displayText.setText("Hey there, " + currentProfile.getFirstName() + "!");
                                     mProfileTracker.stopTracking();
                                 }
                             };
@@ -46,7 +56,11 @@ public class MainActivity extends AppCompatActivity {
                         else {
                             Profile profile = Profile.getCurrentProfile();
                             Toast.makeText(MainActivity.this, "Welcome, " + profile.getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                            displayText.setText("Welcome, " + profile.getFirstName() + "!");
                         }
+
+                        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                        startActivity(intent);
 
                     }
 
@@ -68,5 +82,10 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(callbackManager.onActivityResult(requestCode, resultCode, data)) return;
 
+    }
+
+    public void launchProfileActivity(View view) {
+        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+        startActivity(intent);
     }
 }
