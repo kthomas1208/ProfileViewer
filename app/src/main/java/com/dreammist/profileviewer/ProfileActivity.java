@@ -2,12 +2,16 @@ package com.dreammist.profileviewer;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
+
+import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
     final String LOG_TAG = ProfileActivity.class.getName();
@@ -33,5 +37,18 @@ public class ProfileActivity extends AppCompatActivity {
             Log.v(LOG_TAG, fullName + " " + profile.getId());
 
         }
+
+        ArrayList<String> values = new ArrayList<String>();
+        values.add("Hello, Status 1");
+        values.add("Hey there, Status 2");
+        values.add(("Hi! Status 3"));
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(values);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
     }
 }
