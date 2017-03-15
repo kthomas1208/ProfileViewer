@@ -80,7 +80,8 @@ public class PostsFragment extends Fragment {
         else profilePictureView.setProfileId(profile.getId());
 
 
-        ArrayList<String> values = new ArrayList<String>();
+        // Set posts
+        ArrayList<String> values = new ArrayList<>();
         values.add("Hello, Status 1");
         values.add("Hey there, Status 2");
         values.add(("Hi! Status 3"));

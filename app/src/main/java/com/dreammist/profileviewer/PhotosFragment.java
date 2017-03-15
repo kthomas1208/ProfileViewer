@@ -1,10 +1,15 @@
 package com.dreammist.profileviewer;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 
 ///**
@@ -62,7 +67,27 @@ public class PhotosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_photos, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_photos, container, false);
+        Context context = rootView.getContext();
+
+        //Set photos
+        RecyclerView photoRecyclerView = (RecyclerView)rootView.findViewById(R.id.photos_recycler_view);
+        //photoRecyclerView.setHasFixedSize(true);
+
+        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        photoRecyclerView.setLayoutManager(sglm);
+
+        ArrayList<String> values = new ArrayList<>();
+        values.add("http://i.imgur.com/DvpvklR.png");
+        values.add("http://i.imgur.com/DvpvklR.png");
+        values.add("http://i.imgur.com/DvpvklR.png");
+        values.add("http://i.imgur.com/DvpvklR.png");
+        values.add("http://i.imgur.com/DvpvklR.png");
+
+        PhotoRecyclerViewAdapter adapter = new PhotoRecyclerViewAdapter(context, values);
+        photoRecyclerView.setAdapter(adapter);
+
+        return rootView;
     }
 
 //    // TODO: Rename method, update argument and hook method into UI event
