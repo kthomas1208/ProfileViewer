@@ -15,6 +15,8 @@ import com.facebook.login.widget.ProfilePictureView;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,14 +73,12 @@ public class PostsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_posts, container, false);
 
-        ProfilePictureView profilePictureView = (ProfilePictureView)
-                rootView.findViewById(R.id.profile_pic);
+        // Set the profile picture
+        ProfilePictureView profilePictureView = ButterKnife.findById(rootView, R.id.profile_pic);
         Profile profile = Profile.getCurrentProfile();
-
         if(profile == null) Toast.makeText(rootView.getContext(),
                 "Please login, first", Toast.LENGTH_SHORT).show();
         else profilePictureView.setProfileId(profile.getId());
-
 
         // Set posts
         ArrayList<String> values = new ArrayList<>();
@@ -86,8 +86,9 @@ public class PostsFragment extends Fragment {
         values.add("Hey there, Status 2");
         values.add(("Hi! Status 3"));
 
+        // Set layout manager and adapter
+        RecyclerView recyclerView = ButterKnife.findById(rootView, R.id.recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(values);
-        RecyclerView recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());

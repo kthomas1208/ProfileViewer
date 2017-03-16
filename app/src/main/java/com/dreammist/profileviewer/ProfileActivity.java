@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.facebook.Profile;
 
+import butterknife.BindView;
+
 import static com.dreammist.profileviewer.R.id.container;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -31,11 +33,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     };
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Profile profile = Profile.getCurrentProfile();

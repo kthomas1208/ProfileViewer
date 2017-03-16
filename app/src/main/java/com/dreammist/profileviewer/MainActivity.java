@@ -15,19 +15,20 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import butterknife.BindView;
+
 public class MainActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private Profile profile;
 
-    private TextView displayText;
+    @BindView(R.id.textView) TextView displayText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        displayText = (TextView) findViewById(R.id.textView);
         profile = Profile.getCurrentProfile();
         if(profile != null) displayText.setText("Hey there, " + profile.getFirstName() + "!");
 
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        //displayText = (TextView) findViewById(R.id.textView);
                         if(Profile.getCurrentProfile() == null) {
                             mProfileTracker = new ProfileTracker() {
                                 @Override
