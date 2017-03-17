@@ -8,14 +8,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dreammist.profileviewer.db.Photo;
 import com.dreammist.profileviewer.db.Post;
 import com.dreammist.profileviewer.db.User;
 import com.facebook.Profile;
+import com.squareup.picasso.Picasso;
 
-import butterknife.BindView;
 import io.realm.Realm;
 import io.realm.RealmList;
 
@@ -39,26 +40,32 @@ public class ProfileActivity extends AppCompatActivity {
 
     };
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         initializeDB();
 
         Profile profile = Profile.getCurrentProfile();
 
-        if(profile == null) {
+        /** We're assuming the database is loaded at this point **/
+        // Set the name in the action bar
+        final User user = realm.where(User.class).findFirst();
+        String fullName = String.format("%s %s", user.getFirstName(), user.getLastName());
+        if(profile == null)
             Toast.makeText(this, "Please login, first", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            String fullName = profile.getFirstName() + " " + profile.getLastName();
-            getSupportActionBar().setTitle(fullName);
-        }
+        else
+            fullName = profile.getFirstName() + " " + profile.getLastName();
 
+        getSupportActionBar().setTitle(fullName);
+        //TODO: What if profile is null AND the DB is empty?
+
+        //Set the coverphoto
+        ImageView coverPhoto = (ImageView)findViewById(R.id.cover_photo_view);
+        Picasso.with(this).load(user.getCoverPhotoURL()).into(coverPhoto);
 
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -169,7 +176,7 @@ public class ProfileActivity extends AppCompatActivity {
         user.setLastName("Thomas");
         user.setCoverPhotoURL("http://i.imgur.com/kNk8uTd.jpg");
         user.setPosts(posts);
-
+        user.setPhotos(photos);
 
         // Persist your data easily
         realm.beginTransaction();

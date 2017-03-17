@@ -9,9 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dreammist.profileviewer.db.Photo;
+import com.dreammist.profileviewer.db.User;
+
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmList;
 
 
 /**
@@ -28,6 +33,8 @@ public class PhotosFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Realm realm;
 
     public PhotosFragment() {
         // Required empty public constructor
@@ -58,6 +65,9 @@ public class PhotosFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        realm = Realm.getDefaultInstance();
+
     }
 
     @Override
@@ -67,14 +77,14 @@ public class PhotosFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_photos, container, false);
         Context context = rootView.getContext();
 
-        //Set photos
-        ArrayList<String> values = new ArrayList<>();
-        values.add("http://i.imgur.com/DvpvklR.png");
-        values.add("http://i.imgur.com/DvpvklR.png");
-        values.add("http://i.imgur.com/DvpvklR.png");
-        values.add("http://i.imgur.com/DvpvklR.png");
-        values.add("http://i.imgur.com/DvpvklR.png");
+        // Get photos from DB and add to adapter
+        final User user = realm.where(User.class).findFirst();
+        RealmList<Photo> photos = user.getPhotos();
 
+        ArrayList<String> values = new ArrayList<>();
+        for (Photo photo : photos) {
+            values.add(photo.getUrl());
+        }
 
         //Initialize layout manager and set adapter
         //photoRecyclerView.setHasFixedSize(true);
