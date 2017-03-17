@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.dreammist.profileviewer.db.Post;
+import com.dreammist.profileviewer.db.User;
 import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmList;
 
 
 /**
@@ -32,6 +36,8 @@ public class PostsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Realm realm;
 
 
     public PostsFragment() {
@@ -64,6 +70,7 @@ public class PostsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        realm = Realm.getDefaultInstance();
 
     }
 
@@ -80,11 +87,19 @@ public class PostsFragment extends Fragment {
                 "Please login, first", Toast.LENGTH_SHORT).show();
         else profilePictureView.setProfileId(profile.getId());
 
-        // Set posts
+
+        // Get posts from DB and add to adapter
+        final User user = realm.where(User.class).findFirst();
+        RealmList<Post> posts = user.getPosts();
+
         ArrayList<String> values = new ArrayList<>();
-        values.add("Hello, Status 1");
-        values.add("Hey there, Status 2");
-        values.add(("Hi! Status 3"));
+        for (Post post : posts) {
+            values.add(post.getText());
+        }
+
+//        values.add("Hello, Status 1");
+//        values.add("Hey there, Status 2");
+//        values.add(("Hi! Status 3"));
 
         // Set layout manager and adapter
         RecyclerView recyclerView = ButterKnife.findById(rootView, R.id.recycler_view);

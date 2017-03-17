@@ -10,9 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.dreammist.profileviewer.db.Photo;
+import com.dreammist.profileviewer.db.Post;
+import com.dreammist.profileviewer.db.User;
 import com.facebook.Profile;
 
 import butterknife.BindView;
+import io.realm.Realm;
+import io.realm.RealmList;
 
 import static com.dreammist.profileviewer.R.id.container;
 
@@ -21,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final String SELECTED_ITEM = "selected_item";
     private int selectedItem;
+    Realm realm;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -41,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setSupportActionBar(toolbar);
 
+        initializeDB();
+
         Profile profile = Profile.getCurrentProfile();
 
         if(profile == null) {
@@ -50,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
             String fullName = profile.getFirstName() + " " + profile.getLastName();
             getSupportActionBar().setTitle(fullName);
         }
+
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -63,6 +73,12 @@ public class ProfileActivity extends AppCompatActivity {
             item = navigation.getMenu().getItem(0);
         }
         selectFragment(item);
+    }
+
+    private void initializeDB() {
+
+        realm = Realm.getDefaultInstance();
+        setRealmData();
     }
 
     @Override
@@ -90,5 +106,78 @@ public class ProfileActivity extends AppCompatActivity {
             ft.replace(container, frag, frag.getTag());
             ft.commit();
         }
+    }
+
+    private void setRealmData() {
+
+        // Set up posts
+        RealmList<Post> posts = new RealmList<>();
+        Post post1 = new Post();
+        post1.setDate("March 1");
+        post1.setText("This is post number 1");
+        Post post2 = new Post();
+        post2.setDate("March 2");
+        post2.setText("This is post number 2");
+        Post post3 = new Post();
+        post3.setDate("March 3");
+        post3.setText("This is post number 3");
+        Post post4 = new Post();
+        post4.setDate("March 4");
+        post4.setText("This is post number 4");
+        Post post5 = new Post();
+        post5.setDate("March 5");
+        post5.setText("This is post number 5");
+        posts.add(post1);
+        posts.add(post2);
+        posts.add(post3);
+        posts.add(post4);
+        posts.add(post5);
+
+        // Set up photos
+        RealmList<Photo> photos = new RealmList<>();
+        Photo photo1 = new Photo();
+        photo1.setUrl("http://i.imgur.com/PSDXjz6.jpg");
+        Photo photo2 = new Photo();
+        photo2.setUrl("http://i.imgur.com/KyAHf8v.png");
+        Photo photo3 = new Photo();
+        photo3.setUrl("http://i.imgur.com/CKbhPaq.jpg");
+        Photo photo4 = new Photo();
+        photo4.setUrl("http://i.imgur.com/4SsMsfW.png");
+        Photo photo5 = new Photo();
+        photo5.setUrl("http://i.imgur.com/tWL4YoO.jpg");
+        Photo photo6 = new Photo();
+        photo6.setUrl("http://i.imgur.com/l7NLF4p.jpg");
+        Photo photo7 = new Photo();
+        photo7.setUrl("http://i.imgur.com/JLWVcKx.jpg");
+        Photo photo8 = new Photo();
+        photo8.setUrl("http://i.imgur.com/kgmwSYv.jpg");
+        Photo photo9 = new Photo();
+        photo9.setUrl("http://i.imgur.com/pmYjiXk.jpg");
+        photos.add(photo1);
+        photos.add(photo2);
+        photos.add(photo3);
+        photos.add(photo4);
+        photos.add(photo5);
+        photos.add(photo6);
+        photos.add(photo7);
+        photos.add(photo8);
+        photos.add(photo9);
+
+        // Set up User
+        User user = new User();
+        user.setFirstName("Kevin");
+        user.setLastName("Thomas");
+        user.setCoverPhotoURL("http://i.imgur.com/kNk8uTd.jpg");
+        user.setPosts(posts);
+
+
+        // Persist your data easily
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(user);
+        realm.commitTransaction();
+
+
+        //Prefs.with(this).setPreLoad(true);
+
     }
 }

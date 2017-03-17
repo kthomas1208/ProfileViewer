@@ -16,6 +16,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import butterknife.BindView;
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Realm.init(this);
 
         profile = Profile.getCurrentProfile();
         if(profile != null) displayText.setText("Hey there, " + profile.getFirstName() + "!");
