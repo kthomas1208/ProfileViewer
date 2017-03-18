@@ -92,14 +92,10 @@ public class PostsFragment extends Fragment {
         final User user = realm.where(User.class).findFirst();
         RealmList<Post> posts = user.getPosts();
 
-        ArrayList<String> values = new ArrayList<>();
+        ArrayList<Post> values = new ArrayList<>();
         for (Post post : posts) {
-            values.add(post.getText());
+            values.add(post);
         }
-
-//        values.add("Hello, Status 1");
-//        values.add("Hey there, Status 2");
-//        values.add(("Hi! Status 3"));
 
         // Set layout manager and adapter
         RecyclerView recyclerView = ButterKnife.findById(rootView, R.id.recycler_view);

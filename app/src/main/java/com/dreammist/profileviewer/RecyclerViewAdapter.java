@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.dreammist.profileviewer.db.Post;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -16,8 +18,8 @@ import butterknife.ButterKnife;
  */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
-    public ArrayList<String> myValues;
-    public RecyclerViewAdapter (ArrayList<String> myValues){
+    public ArrayList<Post> myValues;
+    public RecyclerViewAdapter (ArrayList<Post> myValues){
         this.myValues= myValues;
     }
 
@@ -29,7 +31,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.myTextView.setText(myValues.get(position));
+        holder.postTextView.setText(myValues.get(position).getText());
+        holder.dateTextView.setText(myValues.get(position).getDate());
     }
 
 
@@ -39,7 +42,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.card_list_item_status) TextView myTextView;
+        @BindView(R.id.card_list_item_status) TextView postTextView;
+        @BindView(R.id.card_list_item_date) TextView dateTextView;
         public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
