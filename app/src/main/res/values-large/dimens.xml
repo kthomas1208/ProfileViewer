@@ -5,7 +5,7 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="fragment_padding_bottom">90dp</dimen>
     <dimen name="fragment_margin_top">16dp</dimen>
-    <dimen name="posts_width">-1px</dimen>
+    <dimen name="posts_width">600dp</dimen>
     <dimen name="posts_margin_top">10dp</dimen>
     <dimen name="post_card_margin_horizontal">10dp</dimen>
     <dimen name="post_card_margin_vertical">5dp</dimen>
