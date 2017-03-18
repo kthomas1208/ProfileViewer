@@ -1,72 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/com_facebook_button_background_color"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context="com.dreammist.profileviewer.MainActivity">
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/loginButton"
-        android:layout_width="216dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="201dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_editor_absoluteY="286dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="296dp"
         android:layout_height="105dp"
-        android:layout_marginBottom="57dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:text="@string/textview"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Display2"
-        android:textColor="@color/com_facebook_share_button_text_color"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintRight_toLeftOf="@+id/guideline2"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        android:textColor="@color/com_facebook_share_button_text_color" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="17dp" />
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/loginButton"
+        android:layout_width="216dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="20dp" />
 
     <!--TODO: Only make this visible once logged in-->
     <Button
         android:id="@+id/profile_button"
         android:layout_width="212dp"
         android:layout_height="46dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="50dp"
         android:background="@color/com_facebook_blue"
         android:onClick="launchProfileActivity"
         android:text="@string/let_s_go"
-        android:textColor="@android:color/white"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintRight_toLeftOf="@+id/guideline2"
-        android:layout_marginRight="8dp"
-        tools:layout_editor_absoluteY="404dp" />
+        android:textColor="@android:color/white" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

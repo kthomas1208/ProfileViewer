@@ -3,4 +3,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="fragment_padding_bottom">90dp</dimen>
+    <dimen name="posts_large_max_width">600dp</dimen>
 </resources>
